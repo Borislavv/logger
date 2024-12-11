@@ -3,6 +3,7 @@ package loggerconfig
 var _ Configurator = (*Config)(nil)
 
 type Config struct {
+	BufferCapacity int `envconfig:"BUFFER_CAPACITY"  default:"100"`
 	// Level: info, debug, warning, error, fatal, panic.
 	Level string `envconfig:"LOGGER_LEVEL"  default:"debug"`
 	// Output: /dev/null/, stdout, stderr, filename (example: /var/log/app.log).
@@ -14,6 +15,10 @@ type Config struct {
 	// ContextExtraFields determines which fields must be extract from
 	// context.Context and passed into log record (see more into ctxenum package).
 	ContextExtraFields []string `envconfig:"LOGGER_CONTEXT_EXTRA_FIELD"`
+}
+
+func (c Config) GetBufferCapacity() int {
+	return c.BufferCapacity
 }
 
 func (c Config) GetLoggerLevel() string {

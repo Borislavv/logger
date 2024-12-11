@@ -45,8 +45,8 @@ func NewLogrus(cfg loggerconfig.Configurator, output Outputer) (logger *Logrus, 
 	l.logger.SetFormatter(l.getFormat(cfg.GetLoggerFormatter()))
 	l.logger.SetOutput(output)
 
-	l.msgCh = make(chan *loggerdto.MsgDto, 1)
-	l.errCh = make(chan *loggerdto.ErrDto, 1)
+	l.msgCh = make(chan *loggerdto.MsgDto, cfg.GetBufferCapacity())
+	l.errCh = make(chan *loggerdto.ErrDto, cfg.GetBufferCapacity())
 
 	wg := &sync.WaitGroup{}
 	wg.Add(2)
